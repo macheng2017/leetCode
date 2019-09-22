@@ -27,15 +27,17 @@ public class Array {
         return size == 0;
     }
 
-    // 向数组最后添加新元素
-    public void addLastList(int e){
-        if (data.length == size ) {
-            throw new IllegalArgumentException("AddLast failed. Array is full.");
-        }
-        data[size] = e;
-        size ++;
+    // 向数组最前面添加新元素
+    public void addFirst(int e){
+        add(0,e);
     }
 
+    // 向数组最后添加新元素
+    public void addLastList(int e){
+        add(size,e);
+    }
+
+    // 向index位置添加一个元素
     public void add (int index, int e){
         if (data.length == size){
             throw new IllegalArgumentException("Add value failed ");
