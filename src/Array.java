@@ -1,10 +1,11 @@
-
-public class Array {
-    private int[] data;
+// 修改为泛型类
+public class Array<E> {
+    private E[] data;
     private int size;
 
     public Array(int capacity) {
-        data = new int[capacity];
+        // java中不允许直接声明泛型类,可以采用间接转换的方式
+        data = (E[]) new Object[capacity];
         size = 0;
     }
 
@@ -32,17 +33,17 @@ public class Array {
     }
 
     // 向数组最前面添加新元素
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
     }
 
     // 向数组最后添加新元素
-    public void addLastList(int e) {
+    public void addLastList(E e) {
         add(size, e);
     }
 
     // 向index位置添加一个元素
-    public void add(int index, int e) {
+    public void add(int index, E e) {
         if (data.length == size) {
             throw new IllegalArgumentException("Add value failed capacity was fulled");
         }
@@ -65,7 +66,7 @@ public class Array {
      * @param index
      * @return
      */
-    int get(int index) {
+    E get(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed, Index is illegal");
         }
@@ -78,7 +79,7 @@ public class Array {
      * @param index
      * @param e
      */
-    void set(int index, int e) {
+    void set(int index, E e) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Set failed, Index is illegal");
         }
@@ -91,9 +92,9 @@ public class Array {
      * @param e
      * @return
      */
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == e) return true;
+            if (data[i].equals(e) ) return true;
         }
         return false;
     }
@@ -105,9 +106,9 @@ public class Array {
      * @param e
      * @return
      */
-    public int find(int e) {
+    public int find(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == e) return i;
+            if (data[i].equals(e)) return i;
         }
         return -1;
     }
@@ -117,7 +118,7 @@ public class Array {
      *
      * @param e
      */
-    public void removeElement(int e) {
+    public void removeElement(E e) {
         int index = this.find(e);
         if (index == -1) {
             throw new IllegalArgumentException(" Illegal argument");
@@ -132,11 +133,11 @@ public class Array {
      * @param index
      * @return
      */
-    public int remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed, Index is illegal");
         }
-        int ret = data[index];
+        E ret = data[index];
         for (int i = index; i < size; i++) {
             data[i] = data[i + 1];
         }
@@ -144,11 +145,11 @@ public class Array {
         return ret;
     }
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLatest() {
+    public E removeLatest() {
         return remove(size - 1);
     }
 
@@ -171,7 +172,7 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        Array arr = new Array(20);
+        Array<Integer> arr = new Array<>(20);
         for (int i = 0; i < 10; i++) {
             arr.addLastList(i);
         }
