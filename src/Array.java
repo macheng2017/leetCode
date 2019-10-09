@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 // 修改为泛型类
 public class Array<E> {
     private E[] data;
@@ -44,12 +46,14 @@ public class Array<E> {
 
     // 向index位置添加一个元素
     public void add(int index, E e) {
-        if (data.length == size) {
-            throw new IllegalArgumentException("Add value failed capacity was fulled");
-        }
 
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add value failed");
+        }
+
+        if (data.length == size) {
+            // 添加动态数组功能
+            resize(2 * data.length);
         }
 
         for (int i = size - 1; i >= index; i--) {
@@ -94,7 +98,7 @@ public class Array<E> {
      */
     public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i].equals(e) ) return true;
+            if (data[i].equals(e)) return true;
         }
         return false;
     }
@@ -138,10 +142,14 @@ public class Array<E> {
             throw new IllegalArgumentException("Remove failed, Index is illegal");
         }
         E ret = data[index];
-        for (int i = index; i < size; i++) {
-            data[i] = data[i + 1];
+        for (int i = index + 1; i < size; i++) {
+            data[i - 1] = data[i];
         }
         size--;
+        // 当使用容量小于总容量的1/2时,减少数组的总容量
+        if (size == data.length / 2) {
+            resize(data.length / 2);
+        }
         return ret;
     }
 
@@ -171,8 +179,20 @@ public class Array<E> {
         return str.toString();
     }
 
+    private void resize(int newCapacity) {
+        // 创建一个新的数组容量是原来的2倍
+        E[] newData = (E[]) new Object[newCapacity];
+        // 复制旧数组中元素到新数组中
+        for (int i = 0; i < size; i++) {
+            newData[i] = data[i];
+        }
+        // 更新容量以及data的指向新数组
+//        this.size = size;
+        data = newData;
+    }
+
     public static void main(String[] args) {
-        Array<Integer> arr = new Array<>(20);
+        Array<Integer> arr = new Array<>();
         for (int i = 0; i < 10; i++) {
             arr.addLastList(i);
         }
@@ -181,11 +201,20 @@ public class Array<E> {
         System.out.println(arr);
         arr.addFirst(-1);
         System.out.println(arr);
+        arr.removeLatest();
+        System.out.println(arr);
 //        System.out.println(arr.get(-1));
         arr.remove(2);
         System.out.println(arr);
+        arr.addFirst(222);
+        System.out.println(arr);
         arr.removeElement(200);
         System.out.println(arr);
-
+        arr.removeLatest();
+        System.out.println(arr);
+        arr.removeLatest();
+        System.out.println(arr);
+        arr.addFirst(222);
+        System.out.println(arr);
     }
 }
