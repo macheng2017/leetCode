@@ -70,11 +70,19 @@ public class Array<E> {
      * @param index
      * @return
      */
-    E get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed, Index is illegal");
         }
         return data[index];
+    }
+
+    public E getLatest() {
+        return get(size - 1);
+    }
+
+    public E getFirst() {
+        return get(0);
     }
 
     /**
@@ -83,7 +91,7 @@ public class Array<E> {
      * @param index
      * @param e
      */
-    void set(int index, E e) {
+    public void set(int index, E e) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Set failed, Index is illegal");
         }
@@ -191,30 +199,30 @@ public class Array<E> {
         data = newData;
     }
 
-    public static void main(String[] args) {
-        Array<Integer> arr = new Array<>();
-        for (int i = 0; i < 10; i++) {
-            arr.addLastList(i);
-        }
-        System.out.println(arr);
-        arr.add(2, 200);
-        System.out.println(arr);
-        arr.addFirst(-1);
-        System.out.println(arr);
-        arr.removeLatest();
-        System.out.println(arr);
-//        System.out.println(arr.get(-1));
-        arr.remove(2);
-        System.out.println(arr);
-        arr.addFirst(222);
-        System.out.println(arr);
-        arr.removeElement(200);
-        System.out.println(arr);
-        arr.removeLatest();
-        System.out.println(arr);
-        arr.removeLatest();
-        System.out.println(arr);
-        arr.addFirst(222);
-        System.out.println(arr);
-    }
+//    public static void main(String[] args) {
+//        Array<Integer> arr = new Array<>();
+//        for (int i = 0; i < 10; i++) {
+//            arr.addLastList(i);
+//        }
+//        System.out.println(arr);
+//        arr.add(2, 200);
+//        System.out.println(arr);
+//        arr.addFirst(-1);
+//        System.out.println(arr);
+//        arr.removeLatest();
+//        System.out.println(arr);
+////        System.out.println(arr.get(-1));
+//        arr.remove(2);
+//        System.out.println(arr);
+//        arr.addFirst(222);
+//        System.out.println(arr);
+//        arr.removeElement(200);
+//        System.out.println(arr);
+//        arr.removeLatest();
+//        System.out.println(arr);
+//        arr.removeLatest();
+//        System.out.println(arr);
+//        arr.addFirst(222);
+//        System.out.println(arr);
+//    }
 }
