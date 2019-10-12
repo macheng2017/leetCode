@@ -1,35 +1,35 @@
-import java.util.Stack;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Demo<E> {
+public class Solution<E> {
 
     private ArrayStack<E> stackArr = new ArrayStack<>();
     private String str;
 
 
-    public Demo(String str) {
+    public Solution(String str) {
         this.str = str;
     }
-
+    public Solution(){}
     public static void main(String[] args) {
 
 
-        System.out.println( pushSymbol("(]"));
+        System.out.println(new Solution().isValid("(]"));
+        System.out.println(new Solution().isValid("(){()}[]"));
     }
 
-    private static boolean pushSymbol(String str) {
+    private  boolean isValid(String str) {
 //        Pattern p = Pattern.compile("\\[|\\{|\\(");
 //        Matcher m;
-        Stack<Character> stack = new Stack<>();
+        ArrayStack<Character> stack = new ArrayStack<>();
 
         for (int i = 0; i < str.length(); i++) {
             char e = str.charAt(i);
 
-            if (e == '[' || e == '(' || e == '{') {
+            if (Pattern.matches("\\[|\\(|\\{",String.valueOf(e))) {
+//            if (e == '[' || e == '(' || e == '{') {
                 stack.push(e);
             } else {
-                if (stack.isEmpty()){
+                if (stack.isEmpty()) {
                     return false;
                 }
                 char topE = stack.pop();

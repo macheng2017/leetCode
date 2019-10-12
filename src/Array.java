@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 // 修改为泛型类
 public class Array<E> {
