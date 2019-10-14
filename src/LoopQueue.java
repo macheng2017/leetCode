@@ -100,12 +100,13 @@ public class LoopQueue<E> implements Queue<E> {
         StringBuilder str = new StringBuilder();
         str.append("Stack: Front ");
         str.append("[");
-        for (int i = 0; i < data.length; i++) {
-//            str.append(data[(i + front) % data.length]).append(',');
+        for (int i = 0; i < size; i++) {
+            str.append(data[(i + front) % data.length]).append(',');
             // 为什么下面这个会按照数组中元素的实际位置进行排列？
-            str.append(data[i % data.length]).append(',');
+//            str.append(data[i % data.length]).append(',');
         }
-        // 为什么上面的那个循环中会将数组中没有元素的位置打印出null？
+        // 为什么上面的那个循环中会将数组中没有元素的位置打印出null？ 因为使用了data.length （是capacity） 而不是size（是元素数量）
+        // 如果使用data.length 实际上是将未使用的空间也打印了出来,所以会出现null
 //        for (int i = front; i != tail; i = (i + 1) % data.length) {
 //            str.append(data[i]).append(',');
 //        }
