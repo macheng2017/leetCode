@@ -154,7 +154,7 @@ public class Array<E> {
         }
         size--;
         // 当使用容量小于总容量的1/2时,减少数组的总容量
-        if (size == data.length / 4) {
+        if (size == data.length / 4 && data.length / 2 != 0) {
             resize(data.length / 2);
         }
         return ret;

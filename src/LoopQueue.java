@@ -1,20 +1,20 @@
 
 public class LoopQueue<E> implements Queue<E> {
-    private int capacity;
+
     private E[] data;
     private int front, tail;
     private int size;
 
 
     public LoopQueue(int capacity) {
-        data = (E[]) new Object[capacity];
+        data = (E[]) new Object[capacity + 1];
         front = 0;
         tail = 0;
         size = 0;
     }
 
     public LoopQueue() {
-      this(10);
+        this(10);
     }
 
 
@@ -32,19 +32,22 @@ public class LoopQueue<E> implements Queue<E> {
         size++;
     }
 
-    private void resize(int capacity) {
-        E[] newData = (E[]) new Object[capacity];
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity + 1];
 
         // 新数组的索引是从i = 0开始的,而旧数组中的索引是从i = front开始的,那么旧数组中的偏移量(就是每次i++的量) 为
         //
-        for (int i = front; i != (tail + 1) % newData.length; i = (i + 1) % data.length) {
-            int j = 0;
-            newData[j] = data[i];
-            j++;
+//        for (int i = front; i != tail; i = (i + 1) % data.length) {
+////            int j = 0;
+////            newData[j] = data[i];
+////            j++;
+////        }
+        // 为什么上面的方式有问题？会多删掉一个元素
+        for (int i = 0; i < size; i++) {
+            newData[i] = data[(i + front) % data.length];
         }
         front = 0;
-        tail = data.length;
-        size = data.length;
+        tail = size;
         data = newData;
     }
 
@@ -64,14 +67,16 @@ public class LoopQueue<E> implements Queue<E> {
         front = (front + 1) % data.length;
         size--;
         // 这里的capacity /2 !=0 怎么理解?
-        if (size == capacity / 4 && capacity / 2 != 0) {
-            resize(capacity / 2);
+        if (size == getCapacity() / 4 && getCapacity() / 2 != 0) {
+            resize(getCapacity() / 2);
         }
         return result;
     }
 
     @Override
     public E getFront() {
+        if (isEmpty())
+            throw new IllegalArgumentException("Queue is empty");
         return data[front];
     }
 
@@ -87,7 +92,7 @@ public class LoopQueue<E> implements Queue<E> {
     }
 
     public int getCapacity() {
-        return data.length;
+        return data.length - 1;
     }
 
     @Override
@@ -96,10 +101,17 @@ public class LoopQueue<E> implements Queue<E> {
         str.append("Stack: Front ");
         str.append("[");
         for (int i = 0; i < data.length; i++) {
+//            str.append(data[(i + front) % data.length]).append(',');
+            // 为什么下面这个会按照数组中元素的实际位置进行排列？
             str.append(data[i % data.length]).append(',');
         }
+        // 为什么上面的那个循环中会将数组中没有元素的位置打印出null？
+//        for (int i = front; i != tail; i = (i + 1) % data.length) {
+//            str.append(data[i]).append(',');
+//        }
+
         str.deleteCharAt(str.lastIndexOf(","));
-        str.append(String.format("] tail size: %d capacity: %d",getSize(),getCapacity()));
+        str.append(String.format("] tail size: %d capacity: %d", getSize(), getCapacity()));
         return str.toString();
     }
 
