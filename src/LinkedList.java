@@ -23,11 +23,12 @@ public class LinkedList<E> {
         }
     }
 
-    private Node head;
+    private Node dummyHead;
     private int size;
 
     public LinkedList() {
-        head = null;
+        // 使用虚拟头结点,应该初始化一个元素为null的结点
+        dummyHead = new Node();
         size = 0;
     }
 
@@ -38,14 +39,9 @@ public class LinkedList<E> {
     public boolean isEmpty() {
         return size == 0;
     }
-
-    // 在链表头部添加元素e
+    // 在链表头添加元素e
     public void addFirst(E e) {
-//        Node node = new Node(e);
-//        node.next = head;
-//        head = node;
-        head = new Node(e, head);
-        size++;
+        add(0, e);
     }
     // 在链表的index位置添加新的元素e
     // 在链表中不是一个常用的操作,练习用
@@ -54,27 +50,23 @@ public class LinkedList<E> {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException(" Add failed. Illegal index ");
         }
-        if (index == 0) {
-            addFirst(e);
-        } else {
-            // 将prev移动到index-1 的位置
-
-            Node prev = head;
-            for (int i = 0; i < index - 1; i++) {
-                //  向前移动
-                prev = prev.next;
-            }
+        // dummyHead指向的是0这个索引位置的元素之前的那个元素
+        Node prev = dummyHead;
+        // 将prev移动到index 的位置,因为有了虚拟头结点index不需要-1,
+        for (int i = 0; i < index; i++) {
+            //  向前移动
+            prev = prev.next;
+        }
 //            Node node = new Node(e);
 //            node.next = prev.next;
 //            prev.next = node;
-            prev.next = new Node(e, prev.next);
-
-            size++;
-        }
+        prev.next = new Node(e, prev.next);
+        size++;
     }
 
     /**
      * 向链表的末尾添加元素
+     *
      * @param e
      */
     public void addLast(E e) {
