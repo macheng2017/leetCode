@@ -19,7 +19,7 @@ public class LinkedList<E> {
 
         @Override
         public String toString() {
-            return super.toString();
+            return e.toString() ;
         }
     }
 
@@ -39,6 +39,7 @@ public class LinkedList<E> {
     public boolean isEmpty() {
         return size == 0;
     }
+
     // 在链表头添加元素e
     public void addFirst(E e) {
         add(0, e);
@@ -73,4 +74,86 @@ public class LinkedList<E> {
         add(size, e);
     }
 
+    // 取出索引位置的链表中的元素
+    public E get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException(" get failed. Illegal index ");
+        }
+        // 使用0这个边界代入验证了一下,发现索引0是dummyHead这个不对应该是下一个,所以改为dummyHead.next
+        // 对这个虚拟链头理解还是不够,要经常温故才能知新
+        Node<E> cur = dummyHead.next;
+        for (int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+        return cur.e;
+    }
+
+    // 获取链表第一个元素
+    public E getFirst() {
+        return get(0);
+    }
+
+    // 获取链表最后一个元素
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    // 修改链表中的index元素
+    public void set(int index, E e) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException(" set failed. Illegal index ");
+        }
+        Node<E> cur = dummyHead.next;
+        for (int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+        cur.e = e;
+
+    }
+
+    // 查找链表中是否存在元素e
+    public boolean contains(E e) {
+        Node<E> cur = dummyHead.next;
+//        for (int i = 0; i < size - 1; i++) {
+        while (cur.next != null) {
+            if (cur.e.equals(e)) {
+                return true;
+            }
+            cur = cur.next;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        Node<E> cur = dummyHead.next;
+        // 也可以使用下面这样的循环方式
+//        for (Node<E> cur = dummyHead.next; cur != null; cur = cur.next)
+        while (cur != null) {
+            res.append(cur).append(" -> ");
+            cur = cur.next;
+
+        }
+        res.append("NULL");
+        return res.toString();
+    }
+
+    public static void main(String[] args) {
+//        LinkedList<String> ll = new LinkedList<>();
+//        ll.addFirst("1王二");
+//        ll.addFirst("2哈哈");
+//        ll.addFirst("3张三");
+//        ll.addFirst("4哈哈");
+//
+//        System.out.println(ll.toString());
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            linkedList.addFirst(i);
+            System.out.println(linkedList.toString());
+        }
+        linkedList.add(2, 100);
+        System.out.println(linkedList.toString());
+
+    }
 }
