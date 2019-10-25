@@ -141,19 +141,24 @@ public class LinkedList<E> {
 
     public E remove(int index) {
         // 需要先定义两个概念: cur 当前元素 ,prev 当前元素的上一个元素
-        Node<E> cur = dummyHead.next;
         Node<E> prev = dummyHead;
         for (int i = 0; i < index; i++) {
-            cur = cur.next;
             prev = prev.next;
         }
-        Node<E> delNode = cur;
-        Node<E> temp = cur;
+        Node<E> delNode = prev.next;
         prev.next = delNode.next;
-
-        delNode = null;
+        // 注意这里,是delNode.next = null 以前写成delNode = null 体会下区别
+        delNode.next = null;
         size--;
-        return temp.e;
+        return delNode.e;
+    }
+
+    public E removeFirst(){
+        return remove(0);
+    }
+
+    public E removeLast(){
+        return remove(size-1);
     }
 
     public static void main(String[] args) {
@@ -172,7 +177,12 @@ public class LinkedList<E> {
         linkedList.add(2, 100);
         System.out.println(linkedList.toString());
         System.out.println(linkedList.remove(2));
-        System.out.println(linkedList.toString());
-
+        System.out.println(linkedList);
+        linkedList.removeFirst();
+        System.out.println(linkedList);
+        linkedList.removeLast();
+        System.out.println(linkedList);
+        linkedList.addFirst(666);
+        System.out.println(linkedList);
     }
 }
