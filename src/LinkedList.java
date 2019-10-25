@@ -19,7 +19,7 @@ public class LinkedList<E> {
 
         @Override
         public String toString() {
-            return e.toString() ;
+            return e.toString();
         }
     }
 
@@ -139,6 +139,23 @@ public class LinkedList<E> {
         return res.toString();
     }
 
+    public E remove(int index) {
+        // 需要先定义两个概念: cur 当前元素 ,prev 当前元素的上一个元素
+        Node<E> cur = dummyHead.next;
+        Node<E> prev = dummyHead;
+        for (int i = 0; i < index; i++) {
+            cur = cur.next;
+            prev = prev.next;
+        }
+        Node<E> delNode = cur;
+        Node<E> temp = cur;
+        prev.next = delNode.next;
+
+        delNode = null;
+        size--;
+        return temp.e;
+    }
+
     public static void main(String[] args) {
 //        LinkedList<String> ll = new LinkedList<>();
 //        ll.addFirst("1王二");
@@ -153,6 +170,8 @@ public class LinkedList<E> {
             System.out.println(linkedList.toString());
         }
         linkedList.add(2, 100);
+        System.out.println(linkedList.toString());
+        System.out.println(linkedList.remove(2));
         System.out.println(linkedList.toString());
 
     }
