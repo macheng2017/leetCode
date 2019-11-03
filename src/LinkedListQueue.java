@@ -40,7 +40,7 @@ public class LinkedListQueue<E> implements Queue<E> {
             head = tail;
         } else {
             tail.next = new Node(e);
-            tail = tail.next;
+            tail = tail.next; // 这里的意思是 tail向后挪了一位,我没有理解这句话的根本原因是我没有理解java语言中的引用类型
 
         }
         size++;
