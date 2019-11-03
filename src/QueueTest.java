@@ -14,7 +14,7 @@ public class QueueTest {
         }
 
         long end = System.nanoTime();
-        return (end - start) /1000000000.0;
+        return (end - start) / 1000000000.0;
     }
 
     public static void main(String[] args) {
@@ -23,5 +23,7 @@ public class QueueTest {
         System.out.println(String.format("ArrayQueue wast time %s", testQueue(arrayQueue, testCount)));
         LoopQueue<Integer> loopQueue = new LoopQueue<>();
         System.out.println(String.format("LoopQueue wast time %s", testQueue(loopQueue, testCount)));
+        LinkedListQueue<Integer> linkedListQueue = new LinkedListQueue<>();
+        System.out.println(String.format("linkedListQueue wast time %s", testQueue(linkedListQueue, testCount)));
     }
 }
