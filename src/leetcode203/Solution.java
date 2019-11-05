@@ -11,16 +11,12 @@ import java.util.List;
  * 输出: 1->2->3->4->5
  */
 public class Solution {
-
-
     public ListNode removeElements(ListNode head, int val) {
 //       先定义出几个变量 delNode(待删除元素)  head(链表的头元素)
         // 分情况:
         //1. 删除头部节点
         while (head != null && head.val == val) {
-            ListNode delNode = head;
             head = head.next;
-            delNode.next = null;
         }
         // 2. 如果所有的元素都一样 e.g 都是 var = 6,其结果都被上个步骤删除头节点,删完了
         if (head == null) {
@@ -32,15 +28,11 @@ public class Solution {
 
         while (prev.next != null) {
             if (prev.next.val == val) {
-                ListNode delNode = prev.next;
-                prev.next = delNode.next;
-                delNode.next = null;
+                prev.next = prev.next.next;
             } else {
                 prev = prev.next;
             }
         }
-
         return head;
     }
-
 }
