@@ -42,10 +42,12 @@ public class LinkedListQueue<E> implements Queue<E> {
             tail.next = new Node(e);
             tail = tail.next; // 这里的意思是 tail向后挪了一位,我没有理解这句话的根本原因是我没有理解java语言中的引用类型
 
+//           代码 tail.next = new Node(e);
+//            在当前链表的末尾后面又加了一个元素
+//                    tail = tail.next;
+//            上面的添加以后，tail已经不再指向最后一个元素了，所以要维护一下tail，让tail指向最后一个元素
         }
         size++;
-
-
     }
 
     @Override
