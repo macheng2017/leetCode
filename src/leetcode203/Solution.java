@@ -14,6 +14,7 @@ public class Solution {
 
 
     public ListNode removeElements(ListNode head, int val) {
+//       先定义出几个变量 delNode(待删除元素)  head(链表的头元素)
         // 分情况:
         //1. 删除头部节点
         while (head != null && head.val == val) {
@@ -27,7 +28,7 @@ public class Solution {
         }
         // 3. 删除中间重复值
         ListNode prev = head;
-        // 这时候在考虑头部节点之后的节点情况(prev.next), prev后面的节点才是要删除的元素
+        // 这时候再考虑除了头部节点之后的节点情况(即prev.next), prev后面的节点(prev.next)才是要删除的元素
 
         while (prev.next != null) {
             if (prev.next.val == val) {
