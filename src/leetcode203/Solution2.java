@@ -10,19 +10,22 @@ package leetcode203;
  */
 public class Solution2 {
     public ListNode removeElements(ListNode head, int val) {
-//       先定义出几个变量 delNode(待删除元素)  dummyHead(链表的虚拟头节点)
+//       先定义出几个变量 delNode(待删除元素)  dummyHead(链表的虚拟头节点) prev(前一个节点)
 
         ListNode dummyHead = new ListNode(-1);
+        dummyHead.next = head; // 将虚拟头节点放到链表前面
 
-        while (dummyHead.next != null) {
-            if (dummyHead.next.val == val) {
-                ListNode delNode = dummyHead.next;
-                dummyHead.next = delNode.next;
-                delNode.next = null;
+        ListNode prev = dummyHead;
+        while (prev.next != null) {
+            if (prev.next.val == val) {
+//                ListNode delNode = prev.next;
+//                prev.next = delNode.next;
+//                delNode.next = null;
+                prev.next = prev.next.next;
             } else {
-                dummyHead.next = dummyHead.next.next;
+                prev = prev.next;
             }
         }
-        return head;
+        return dummyHead.next;
     }
 }
