@@ -12,6 +12,8 @@ public class Solution3 {
     public ListNode removeElements(ListNode head, int val) {
         if (head == null)
             return null;
+        // 把链表看作一个 一个元素 和一个长一点的链表,而这个长一点的链表就是下面的函数调用
+        // 想想数组求和的例子
         ListNode res = removeElements(head.next, val);
         if (head.val == val) {
             return res;
